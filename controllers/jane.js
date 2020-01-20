@@ -1,7 +1,6 @@
 const Jane = require("../models/jane");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
-//jane controllers
 exports.create = (req, res) => {
   const jane = new Jane(req.body);
   jane.save((err, data) => {
@@ -45,7 +44,7 @@ exports.janeById = (req, res, next, id) => {
         error: "Jane does not exists"
       });
     }
-    //add category to req
+    //add jane to req
     req.jane = jane;
     next();
   });

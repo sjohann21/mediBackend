@@ -12,13 +12,16 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const categoryRoutes = require("./routes/category");
+const capacityRoutes = require("./routes/capacity");
 const janeRoutes = require("./routes/jane");
 const clinicRoutes = require("./routes/clinic");
 const productRoutes = require("./routes/product");
+const vendorRoutes = require("./routes/vendor");
 const braintreeRoutes = require("./routes/braintree");
 const orderRoutes = require("./routes/order");
 
 const clinicUserRoutes = require("./routes/clinic-user");
+const vendorUserRoutes = require("./routes/vendor-user");
 
 //APP
 const app = express()
@@ -44,12 +47,15 @@ app.use(cors());
 app.use('/api', authRoutes)
 app.use('/api', userRoutes);
 app.use("/api", categoryRoutes);
+app.use("/api", capacityRoutes);
 app.use("/api", productRoutes);
+app.use("/api", vendorRoutes);
 app.use("/api", braintreeRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", clinicRoutes);
 app.use("/api", janeRoutes);
 app.use("/api", clinicUserRoutes);
+app.use("/api", vendorUserRoutes);
 
 
 const port = process.env.PORT || 8000

@@ -1,13 +1,13 @@
 const express = require("express");
 var router = express.Router();
-
+ 
 const { createClinicUser } = require("../controllers/clinic-user");
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
 //const { userById } = require("../controllers/user");
 
 //router.get("/jane/:janeId", read);
 
-router.post("/create/clinic/user", requireSignin,  isAdmin, createClinicUser);
+router.post("/create/clinic/user", requireSignin, isAuth, isAdmin,  createClinicUser);
 
 //router.param("userId", userById);
 //router.param("janeId", janeById);

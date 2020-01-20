@@ -57,7 +57,7 @@ exports.clinicById = (req, res, next, id) => {
         error: "Clinic does not exists"
       });
     }
-    //add category to req
+    //add clinic to req
     req.clinic = clinic;
     next();
   });

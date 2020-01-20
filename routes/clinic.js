@@ -15,7 +15,6 @@ router.get("/clinics", list);
 //router.get("/jane/:janeId", read);
 
 router.post("/create/clinic/:userId", requireSignin, isAuth, isAdmin, create);
-
 router.param("clinicId", clinicById);
 
 module.exports = router;

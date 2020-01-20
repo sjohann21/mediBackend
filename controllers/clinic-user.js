@@ -18,7 +18,7 @@ exports.clinicUserById = (req, res, next, id) => {
 
 
 exports.createClinicUser = (req, res) => {
-  console.log("ClinicUser req.body = ", req.body);
+  console.log("*** ClinicUser req.body = ", req.body);
   const clinicUser = new ClinicUser(req.body);
   clinicUser.save((err, data) => {
     if (err) {

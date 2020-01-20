@@ -1,6 +1,9 @@
 const User = require("../models/user");
 const Jane = require("../models/jane");
 const Clinic = require("../models/clinic");
+const ClinicUser = require("../models/clinic-user");
+const VendorUser = require("../models/vendor-user");
+
 const jwt = require("jsonwebtoken"); // to generate signed token
 const expressJwt = require("express-jwt"); // for authorization check
 const { errorHandler } = require("../helpers/dbErrorHandler");
@@ -84,9 +87,10 @@ exports.requireSignin = expressJwt({
 
 exports.isAuth = (req, res, next) => {
   let user = req.profile && req.auth && req.profile._id == req.auth._id;
+  console.log("*** user = ", user)
   if (!user) {
     return res.status(403).json({
-      error: "Access denied - User not authorized"
+      error: "isAuth: Access denied - User not authorized"
     });
   }
   next();
@@ -95,7 +99,7 @@ exports.isAuth = (req, res, next) => {
 exports.isAdmin = (req, res, next) => {
   if (req.profile.role === 0) {
     return res.status(403).json({
-      error: "Admin resourse! Access denied"
+      error: "isAdmin: Admin rights are required - Access denied"
     });
   }
   next();
@@ -111,11 +115,54 @@ exports.addJane = async (req, res) => {
       if (err) {
         // return res.status(400).json({ err });
         return res.status(400).json({
-          error: "AUTH JANE: Email is taken"
+          error: "AUTH: Email is taken"
         });
       }
       console.log("SENDING EMAIL FOR SIGNUP VERIFICATION ...");
       res.status(200).json({ jane });
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+exports.addVendorUser = async (req, res) => {
+  console.log("controllers ... addVendorUser")
+  try {
+    const vendorUser = await new VendorUser(req.body);
+    console.log("req.body = ", req.body);
+    //user - changed to clinicUser
+    await vendorUser.save((err, vendorUser) => {
+      if (err) {
+        // return res.status(400).json({ err });
+        return res.status(400).json({
+          error: "AUTH VendorUser: Email is taken"
+        });
+      }
+      console.log("SENDING EMAIL FOR SIGNUP VERIFICATION ...");
+      res.status(200).json({ vendorUser });
+    });
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+
+exports.addClinicUser = async (req, res) => {
+  console.log("controllers ... addClinicUser")
+  try {
+    const clinicUser = await new ClinicUser(req.body);
+    console.log("req.body = ", req.body);
+    //user - changed to clinicUser
+    await clinicUser.save((err, clinicUser) => {
+      if (err) {
+        // return res.status(400).json({ err });
+        return res.status(400).json({
+          error: "AUTH clinicUser: Email is taken"
+        });
+      }
+      console.log("SENDING EMAIL FOR SIGNUP VERIFICATION ...");
+      res.status(200).json({ clinicUser });
     });
   } catch (err) {
     console.error(err.message);
